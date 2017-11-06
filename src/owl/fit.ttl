@@ -1,0 +1,216 @@
+@prefix : <http://www.purl.org/ns/fit#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.purl.org/ns/fit> .
+
+<http://www.purl.org/ns/fit> rdf:type owl:Ontology ;
+                              dc:title "Fitness Ontology"@en ;
+                              owl:versionInfo "1.0.0"^^xsd:string ;
+                              dc:date "2017-11-06"^^xsd:string ;
+                              dc:rights "This ontology is distributed under a Creative Commons Attribution License - http://creativecommons.org/licenses/by/3.0"@en ;
+                              rdfs:label "Fitness Ontology"@en ;
+                              dc:creator "Stephan Zednik"^^xsd:string ;
+                              rdfs:comment "Simple RDF/OWL representation of workouts."@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+dc:date rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+dc:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/rights
+dc:rights rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+dc:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.purl.org/ns/fit#category
+:category rdf:type owl:ObjectProperty .
+
+
+###  http://www.purl.org/ns/fit#load
+:load rdf:type owl:ObjectProperty ;
+      rdfs:domain :Exercise ;
+      rdfs:range :ExerciseLoad .
+
+
+###  http://www.purl.org/ns/fit#of
+:of rdf:type owl:ObjectProperty ;
+    rdfs:domain :Set ;
+    rdfs:range :Exercise .
+
+
+###  http://www.purl.org/ns/fit#round
+:round rdf:type owl:ObjectProperty ;
+       rdfs:domain :Workout ;
+       rdfs:range :Round .
+
+
+###  http://www.purl.org/ns/fit#set
+:set rdf:type owl:ObjectProperty ;
+     rdfs:domain :Round ;
+     rdfs:range :Set .
+
+
+###  http://www.purl.org/ns/fit#uses
+:uses rdf:type owl:ObjectProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( :Exercise
+                                  :Workout
+                                )
+                  ] ;
+      rdfs:range :Equipment .
+
+
+###  http://www.purl.org/ns/fit#works
+:works rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Exercise
+                                   :Workout
+                                 )
+                   ] ;
+       rdfs:range :Muscle .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.purl.org/ns/fit#index
+:index rdf:type owl:DatatypeProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Round
+                                   :Set
+                                 )
+                   ] ;
+       rdfs:range xsd:string .
+
+
+###  http://www.purl.org/ns/fit#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+
+###  http://www.purl.org/ns/fit#reps
+:reps rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Set ;
+      rdfs:range xsd:integer .
+
+
+###  http://www.purl.org/ns/fit#restScheme
+:restScheme rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Round ;
+            rdfs:range xsd:string .
+
+
+###  http://www.purl.org/ns/fit#tempo
+:tempo rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Exercise ;
+       rdfs:range xsd:string .
+
+
+###  http://www.purl.org/ns/fit#unitOfMeasure
+:unitOfMeasure rdf:type owl:DatatypeProperty ;
+               rdfs:domain :ExerciseLoad ;
+               rdfs:range xsd:string .
+
+
+###  http://www.purl.org/ns/fit#weight
+:weight rdf:type owl:DatatypeProperty ;
+        rdfs:domain :ExerciseLoad ;
+        rdfs:range xsd:decimal .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.purl.org/ns/fit#Equipment
+:Equipment rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#Exercise
+:Exercise rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :category ;
+                            owl:allValuesFrom :ExerciseCategory
+                          ] .
+
+
+###  http://www.purl.org/ns/fit#ExerciseCategory
+:ExerciseCategory rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#ExerciseLoad
+:ExerciseLoad rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#Muscle
+:Muscle rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#Round
+:Round rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#Set
+:Set rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#TrainingCategory
+:TrainingCategory rdf:type owl:Class .
+
+
+###  http://www.purl.org/ns/fit#Workout
+:Workout rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :category ;
+                           owl:allValuesFrom :TrainingCategory
+                         ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.purl.org/ns/fit#Cardio
+:Cardio rdf:type owl:NamedIndividual ,
+                 :TrainingCategory .
+
+
+###  http://www.purl.org/ns/fit#MetabolicConditioning
+:MetabolicConditioning rdf:type owl:NamedIndividual ,
+                                :TrainingCategory .
+
+
+###  http://www.purl.org/ns/fit#MuscularEndurance
+:MuscularEndurance rdf:type owl:NamedIndividual ,
+                            :TrainingCategory .
+
+
+###  http://www.purl.org/ns/fit#Strength
+:Strength rdf:type owl:NamedIndividual ,
+                   :TrainingCategory .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
